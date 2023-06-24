@@ -12,15 +12,13 @@ namespace Employees.Controllers
     {
 
         private readonly ILogger<EmployeesController> _logger;
-        private readonly IUserService _userService;
         private readonly IBaseRepository<Employee> _employeeRepository;
         private readonly IEmployeeService _employeeService;
 
-        public EmployeesController(ILogger<EmployeesController> logger, IUserService userService,
+        public EmployeesController(ILogger<EmployeesController> logger,
             IBaseRepository<Employee> employeeRepository, IEmployeeService employeeService)
         {
             _logger = logger;
-            _userService = userService;
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;
         }
