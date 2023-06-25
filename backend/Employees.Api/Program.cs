@@ -40,6 +40,14 @@ try
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
+
+    using (var serviceScope = app?.Services?.GetService<IServiceScopeFactory>()?.CreateScope())
+    {
+        var context = serviceScope.ServiceProvider.GetRequiredService<EmployeesDbContext>();
+        context.Database.EnsureCreated();
+    }
+
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();

@@ -1,12 +1,21 @@
 ﻿
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
 namespace Employees.Core.Services
 {
     public class UserService : IUserService
     {
-        public bool isAdmin()
+        private readonly IConfiguration _configuration;
+
+        public UserService(IConfiguration configuration)
         {
-            return true;
+            _configuration = configuration;
+        }
+        public bool isAdmin(string adminKey)
+        {
+            return !adminKey.IsNullOrEmpty() && _configuration["AdminKey"] == adminKey;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IUserService
     {
-        bool isAdmin();
+        bool isAdmin(string adminKey);
     }
 }

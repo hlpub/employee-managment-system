@@ -1,6 +1,10 @@
 ﻿using Employees.Core.DbContexts;
 using Employees.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Employees.Core.Domain.Repositories
 {
@@ -21,13 +25,19 @@ namespace Employees.Core.Domain.Repositories
 
         public virtual async Task<IEnumerable<T>> GetAsync(CancellationToken cancellationToken)
         {
-            return await _employeesDbContext.Set<T>().AsQueryable().AsNoTracking().ToListAsync(cancellationToken);
+            return await _employeesDbContext.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public virtual async Task<IEnumerable<T>> SearchAsync(Func<T, bool> searchPredicate, CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<T>> SearchAsync(Expression<Func<T, bool>> searchPredicate, CancellationToken cancellationToken)
         {
-            return await _employeesDbContext.Set<T>().Where(searchPredicate)
-                .AsQueryable().AsNoTracking().ToListAsync(cancellationToken);
+            return await _employeesDbContext.Set<T>()
+                .AsNoTracking().Where(searchPredicate).ToListAsync(cancellationToken);
+        }
+
+        public virtual async Task<bool> AnyAsync(Expression<Func<T, bool>> searchPredicate, CancellationToken cancellationToken)
+        {
+            return await _employeesDbContext.Set<T>()
+                .AsNoTracking().AnyAsync(searchPredicate);
         }
 
         public virtual async Task<int> CreateAsync(T entity, CancellationToken cancellationToken)
