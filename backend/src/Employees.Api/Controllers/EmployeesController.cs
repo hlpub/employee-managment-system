@@ -27,11 +27,11 @@ namespace Employees.Controllers
         [HttpGet]
         [HttpGet("{search?}")]
         public async Task<IActionResult> Get([FromRoute] string? search,
-            [FromHeader(Name = "x-admin-key")] string adminKey, CancellationToken cancellationToken)
+            [FromHeader(Name = "x-admin-key")] string? adminKey, CancellationToken cancellationToken)
         {
             try
             {
-                if (!search.IsNullOrEmpty() && !_userService.isAdmin(adminKey))
+                if (!search.IsNullOrEmpty() && adminKey is not null && !_userService.isAdmin(adminKey))
                     return Unauthorized();
 
                 _logger.LogInformation("Fetching Employees");
@@ -83,9 +83,9 @@ namespace Employees.Controllers
                 if (await _employeeRepository.AnyAsync(x => x.Email == employee.Email, cancellationToken))
                     return BadRequest("There's another employee with this email");
 
-                var newId = await _employeeRepository.CreateAsync(employee, cancellationToken);
+                await _employeeRepository.CreateAsync(employee, cancellationToken);
 
-                return Ok(new { id = newId });
+                return Ok(employee);
             }
 
             catch (Exception ex)
@@ -126,6 +126,29 @@ namespace Employees.Controllers
                 throw;
             }
         }
+
+        [HttpDelete("employee/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation("Deleting employee {0}", id);
+
+                if (!await _employeeRepository.AnyAsync(x=> x.Id == id, cancellationToken))
+                    return NotFound("The provided employee Id doesn't exist");
+
+                await _employeeRepository.DeleteAsync(id, cancellationToken);
+
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("Unable to create new employee. {0}", ex);
+                throw;
+            }
+        }
+
 
     }
 }

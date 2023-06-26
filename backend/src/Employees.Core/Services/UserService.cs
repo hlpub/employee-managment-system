@@ -15,7 +15,8 @@ namespace Employees.Core.Services
         }
         public bool isAdmin(string adminKey)
         {
-            return !adminKey.IsNullOrEmpty() && _configuration["AdminKey"] == adminKey;
+            return !adminKey.IsNullOrEmpty() && 
+                _configuration.GetSection("AdminKey").Value == adminKey;
         }
     }
 }

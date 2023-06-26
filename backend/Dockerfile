@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /work
-COPY . .
+COPY src/ .
 
 FROM build AS publish
 WORKDIR /work/Employees.Api

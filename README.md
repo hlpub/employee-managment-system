@@ -25,7 +25,7 @@ as part of a techincal assessment.
 docker compose up
 ```
 
-* Open a browser tab and navigate to http://localhost:9000
+* Open a browser tab and navigate to http://localhost:3000
 
 ## Authors
 

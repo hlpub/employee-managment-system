@@ -30,6 +30,11 @@ try
             .AddSwaggerGen()
             .AddSerilog();
 
+
+    //Probably not a good idea in a real world app. I did it just for easiness
+    services.AddCors(x => x.AddDefaultPolicy(z => z.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
+        
+
     services.AddDbContext<EmployeesDbContext>(options =>
         options.UseSqlServer(config.GetSection("ConnectionStrings:EmployeesDb").Value));
 
@@ -50,6 +55,7 @@ try
 
     if (app.Environment.IsDevelopment())
     {
+        app.UseCors();
         app.UseSwagger();
         app.UseSwaggerUI();
     }
