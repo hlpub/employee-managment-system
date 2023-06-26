@@ -29,10 +29,14 @@ docker compose up
 
 ## Notes
 
+The system is containeraized in three pieces: FE (React/ES/ Typescript), BE (.NET Core / EF / Code first / Web API)
+and an SQL Server Exppress instance
+
 Due to the fact that this is an app developed as per the sole pupose of demostrating
 knowledge on certain areas, there are certain practices that were not implemented, but 
 the Author usually use in real world scenarios like proper config in fe, the use of react query,
 caching policies, unit testing, cors policies,, auth, etc.
+
 
 ## Authors
 
