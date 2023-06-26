@@ -27,6 +27,13 @@ docker compose up
 
 * Open a browser tab and navigate to http://localhost:3000
 
+## Notes
+
+Due to the fact that this is an app developed as per the sole pupose of demostrating
+knowledge on certain areas, there are certain practices that were not implemented, but 
+the Author usually use in real world scenarios like proper config in fe, the use of react query,
+caching policies, unit testing, cors policies,, auth, etc.
+
 ## Authors
 
 Contributors names and contact info
